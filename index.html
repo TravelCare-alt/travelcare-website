@@ -1152,6 +1152,10 @@
         }
 
         function findAnswer(question) {
+            if (!question || question.trim() === '') {
+                return 'Hello! How can I help you today? You can ask me about pricing, how to get started, security, or anything else about TravelCare!';
+            }
+            
             const q = question.toLowerCase();
             
             for (let key in travelcareKnowledge) {
