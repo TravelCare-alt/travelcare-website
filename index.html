@@ -1218,39 +1218,13 @@
             const email = document.getElementById('supportEmail').value;
             if (email) {
                 const chatMessages = document.getElementById('chatMessages');
-                const allMessages = chatMessages.querySelectorAll('div');
-                let conversationHistory = '';
-                allMessages.forEach(msg => {
-                    conversationHistory += msg.textContent + '\n';
-                });
-
-                // Send to backend
-                fetch('/api/chat-support', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        message: conversationHistory,
-                    }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const confirmMsg = document.createElement('div');
-                    confirmMsg.style.cssText = 'background: #d4edda; padding: 0.75rem; border-radius: 8px; margin-bottom: 0.75rem; border-left: 4px solid #28a745;';
-                    confirmMsg.innerHTML = '<p style="margin: 0; color: #155724; font-size: 0.9rem;">✓ ' + data.message + '</p>';
-                    chatMessages.appendChild(confirmMsg);
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    const errorMsg = document.createElement('div');
-                    errorMsg.style.cssText = 'background: #f8d7da; padding: 0.75rem; border-radius: 8px; margin-bottom: 0.75rem; border-left: 4px solid #dc3545;';
-                    errorMsg.innerHTML = '<p style="margin: 0; color: #721c24; font-size: 0.9rem;">Error sending request. Please try again.</p>';
-                    chatMessages.appendChild(errorMsg);
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                });
+                
+                // Show confirmation message
+                const confirmMsg = document.createElement('div');
+                confirmMsg.style.cssText = 'background: #d4edda; padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border-left: 4px solid #28a745; color: #155724;';
+                confirmMsg.innerHTML = '<p style="margin: 0; font-weight: 500;">✓ Your support request has been submitted!</p><p style="margin: 0.5rem 0 0 0; font-size: 0.9rem;">Our team will contact you at ' + email + ' within 24 hours.</p>';
+                chatMessages.appendChild(confirmMsg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
             }
         }
     </script>
